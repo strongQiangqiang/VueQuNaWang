@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue中的列表渲染</title>
+  <script src="./vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- 1.循环的时候带上唯一的key可以优化性能 -->
+    <div
+      v-for="(item, index) in list"
+      :key="item.id"
+    >
+      {{item.text}} --- {{index}}
+    </div>
+    <!-- 2.模板占位符的使用,templat不会被渲染 -->
+    <template v-for="(item, index) of list" :key="item.id">
+      <div>{{item.text}} --- {{index}}</div>
+      <span>{{item.text}}</span>
+    </template>
+    <!-- 3.对象循环 -->
+    <div v-for="(item, key, index) in userInfo">
+      {{item}} --- {{key}} --- {{index}}
+    </div>
+  </div>
+</body>
+<script>
+  var app = new Vue({
+    el: '#app',
+    // Vue提供的监听数组方法 push, pop, shift, unshift, splice, sort, reverse
+    data: {
+      // 数组的set， Vue.set和app.$set
+      list: [
+        {
+          id: '1',
+          text: "Hello"
+        },
+        {
+          id: '2',
+          text: "World"
+        },
+        {
+          id: '2',
+          text: "year"
+        }
+      ],
+      // 对象的set， Vue.set和app.$set
+      userInfo: {
+        name: "Dell",
+        age: 28,
+        gender: "male",
+        salary: "secret"
+      }
+    }
+  })
+</script>
+</html>

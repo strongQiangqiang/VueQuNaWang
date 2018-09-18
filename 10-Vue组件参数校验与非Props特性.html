@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue组件参数校验与非Props特性</title>
+  <script src="./vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <child content="helloss"></child>
+  </div>
+</body>
+<script>
+  Vue.component('child', {
+    props: {
+      // content: [String, Number]
+      content: {
+        type: String, //定义接收props类型
+        required: false, //定义接收props是否必传
+        default: 'default value', //定义没有props时候的值
+        validator: function(value) { //定义接收props的自定义校验
+          return (value.length > 5)
+        }
+      }
+    },
+    template: '<div>{{content}}</div>'
+  })
+  var vm = new Vue({ // 根实例
+    el: '#app',
+    data: {
+    },
+    methods: {
+    }
+  })
+</script>
+</html>

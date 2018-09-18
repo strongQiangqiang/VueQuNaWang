@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue组件父子组件传值</title>
+  <script src="./vue.js"></script>
+</head>
+<body>
+  <!-- 
+    Vue的单项数据流，父可以像子传，子不可以改父的数据,
+    主要是如果子组件接受的是对象如果改了的话，会影响其他
+  -->
+  <div id="app">
+    <counter :count="1" @change="handleIncrease"></counter>
+    <counter :count="2" @change="handleIncrease"></counter>
+    <div>{{total}}</div>
+  </div>
+</body>
+<script>
+  var counter = { // 局部组件
+    props: ['count'],
+    data: function() {
+      return {
+        // 拷贝props的副本去修改副本
+        number: this.count
+      }
+    },
+    template: '<div @click="handleClick">{{number}}</div>',
+    methods: {
+      handleClick: function() {
+        this.number = this.number + 2
+        this.$emit('change', 2)
+      }
+    }
+  }
+  var vm = new Vue({ // 根实例
+    el: '#app',
+    data: {
+      total: 3,
+    },
+    components: {
+      counter: counter
+    },
+    methods: {
+      handleIncrease: function(step) {
+        this.total += step
+      }
+    }
+  })
+</script>
+</html>

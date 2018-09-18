@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue给组件绑定原生事件</title>
+  <script src="./vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- 给组件绑定原生事件，要在事件后面加上native -->
+    <child @click.native="handleClick"></child>
+  </div>
+</body>
+<script>
+  Vue.component('child', {
+    props: {
+    },
+    template: '<div @click="handleChildClick">Child</div>',
+    methods: {
+      handleChildClick: function() {
+        // alert('child click')
+      }
+    }
+  })
+  var vm = new Vue({ // 根实例
+    el: '#app',
+    data: {
+    },
+    methods: {
+      handleClick: function() {
+        alert('click')
+      }
+    }
+  })
+</script>
+</html>

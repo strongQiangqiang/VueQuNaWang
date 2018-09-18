@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue中的作用域插槽</title>
+  <script src="./vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <body-content>
+      <!-- 给插槽取个名字可以跟下面对应 -->
+      <child class="header" slot="header">header</child>
+    </body-content>
+  </div>
+</body>
+<script>
+  Vue.component('child', {
+    data: function() {
+      return {
+        list: [1, 2, 3, 4]
+      }
+    },
+    template: `
+      <div>
+        <ul>
+          <li v-for="item of list">
+            {{item}}
+          </li>  
+        </ul>
+      </div>
+    `
+  })
+  var app = new Vue({ // 根实例
+    el: '#app'
+  })
+</script>
+</html>

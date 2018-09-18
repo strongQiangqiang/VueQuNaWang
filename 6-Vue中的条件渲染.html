@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue中的条件渲染</title>
+  <script src="./vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- v-if和v-show的区别 -->
+    <div v-if="show" data-test="v-if">{{message}}</div>
+    <div v-else data-test="v-else">Bye World</div>
+    <div v-show="show" data-test="v-show">{{message}}</div>
+    <!-- v-if和v-else的用法 -->
+    <div>
+      <div v-if="showA === 'a'">This is A</div>
+      <div v-else-if="showA === 'b'">This is B</div>
+      <div v-else>This is others</div>
+    </div>
+    <!-- 条件渲染注意使用key来避免dom复用 -->
+    <div>
+      <div v-if="show">
+        用户名: <input key="username"/>  
+      </div>
+      <div v-else>
+        邮箱名：<input key="password">
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  var app = new Vue({ // 根实例
+    el: '#app',
+    data: {
+      show: false,
+      showA: 'a',
+      message: "Hello World"
+    }
+  })
+</script>
+</html>
