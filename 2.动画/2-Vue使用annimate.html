@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue中使用animate.css库</title>
+  <script src="../until/vue.js"></script>
+  <link rel="stylesheet" href="../until/animate.min.css">
+  <style>
+    @keyframes bounce-in {
+      0% {
+        transform: scale(0)
+      }
+      50% {
+        transform: scale(1.5)
+      }
+      100% {
+        transform: scale(1)
+      }
+    }
+    .fade-enter-active {
+      transform-origin: left center;
+      animation: bounce-in 1s;
+    }
+    .fade-leave-active {
+      transform-origin: left center;
+      animation: bounce-in 1s reverse;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- animate.css插件的引用 -->
+    <transition
+      name="an"
+      enter-active-class="animated swing"
+      leave-active-class="animated bounceOutLeft"
+    >
+        <div v-if="show">animate库的使用</div>
+    </transition> 
+    <!-- 手写动画 -->
+    <transition name="fade">
+        <div v-if="show">Hello world</div>
+    </transition>
+    <button @click="handleClick">切换</button>
+  </div>
+</body>
+<script>
+  var app = new Vue({ // 根实例
+    el: '#app',
+    data: {
+      show: true,
+    },
+    methods: {
+      handleClick: function() {
+        this.show = !this.show
+      }
+    }
+  })
+</script>
+</html>

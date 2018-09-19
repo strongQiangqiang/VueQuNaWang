@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue中同时使用过渡和动画</title>
+  <script src="../until/vue.js"></script>
+  <link rel="stylesheet" href="../until/animate.min.css">
+  <style>
+    .fade-enter, .fade-leave-to {
+      opacity: 0;
+    }
+    .fade-enter-active, .fade-leave-active {
+      transition: opacity 3s;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- 想在第一次刷新有动画显示需要加入appear和appear-active-class -->
+    <!-- 添加type可以让动画以什么动画时长为主 -->
+    <transition
+      type="transition"
+      name="fade"
+      appear
+      enter-active-class="animated swing fade-enter-active"
+      leave-active-class="animated shake fade-leave-active "
+      appear-active-class="animated swing"
+    >
+        <div v-if="show">animate库的使用</div>
+    </transition> 
+    <!-- 添加:duration="5000"可以自定义动画播放时长 -->
+    <transition
+      :duration="{enter: 5000, leave: 10000}"
+      name="fade"
+      appear
+      enter-active-class="animated swing fade-enter-active"
+      leave-active-class="animated shake fade-leave-active "
+      appear-active-class="animated swing"
+    >
+        <div v-if="show">animate库的使用</div>
+    </transition>
+    <button @click="handleClick">切换</button>
+  </div>
+</body>
+<script>
+  var app = new Vue({ // 根实例
+    el: '#app',
+    data: {
+      show: true,
+    },
+    methods: {
+      handleClick: function() {
+        this.show = !this.show
+      }
+    }
+  })
+</script>
+</html>

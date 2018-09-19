@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vue配合velocity插件</title>
+  <script src="../until/vue.js"></script>
+  <script src="../until/velocity.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <transition name="fade" 
+      @before-enter="handleBeforeEnter" 
+      @enter="handleEnter" 
+      @after-enter="handleAfterEnter"
+      @before-leave="handleBeforeLeave" 
+      @leave="handleLeave" 
+      @after-leave="handleAfterLeave"
+    >
+      <div v-if="show">Hello world</div>
+    </transition>
+    <button @click="handleClick">切换</button>
+  </div>
+</body>
+<script>
+  var app = new Vue({ // 根实例
+    el: '#app',
+    data: {
+      show: true,
+    },
+    methods: {
+      handleClick: function () {
+        this.show = !this.show
+      },
+      // 动画钩子
+      handleBeforeEnter: function (el) { // 一个参数el元素
+        el.style.opacity = 0
+      },
+      handleEnter: function (el, done) { // 两个参数el，done回调函数
+        Velocity(el, {
+          opacity: 1
+        }, {
+          duration: 1000,
+          // 动画执行完后会执行complete
+          complete: done
+        })
+      },
+      handleAfterEnter: function (el) {
+        console.log('213')
+      },
+      handleBeforeLeave: function() {},
+      handleLeave: function() {},
+      handleAfterLeave: function() {}
+    }
+  })
+</script>
+
+</html>

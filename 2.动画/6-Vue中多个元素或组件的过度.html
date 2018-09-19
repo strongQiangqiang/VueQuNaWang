@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue中多个元素或组件的过度</title>
+  <script src="../until/vue.js"></script>
+  <style>
+    .fade-enter, .fade-leave-to {
+      opacity: 0;
+    }
+    .fade-enter-active, .fade-leave-active {
+      transition: opacity 1s;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- 多元素动画 -->
+    <div>
+      <!-- 可以在transition标签内设置mode来控制动画顺序 -->
+      <transition name="fade" mode="out-in">
+        <!-- 多元素动画如果不加key是没有动画的,因为vue是有dom复用的 -->
+        <div v-if="show" key="hello">Hello world</div>
+        <div v-else key="bye">Bye World</div>
+      </transition> 
+      <button @click="handleClick">切换</button>
+    </div>
+    <!-- 多组件动画 -->
+    <div>
+      <!-- 不使用动态组件is -->
+      <transition name="fade" mode="out-in">
+        <child v-if="show"></child>
+        <child-one v-else></dichild-onev>
+      </transition> 
+      <!-- 使用动态组件is -->
+      <transition name="fade" mode="in-out">
+        <component :is="type"></component>
+      </transition> 
+      <button @click="handleIsClick">切换</button>
+    </div>
+  </div>
+</body>
+<script>
+  Vue.component('child', {
+    template: '<div>child</div>'
+  })
+  Vue.component('child-one', {
+    template: '<div>child-one</div>'
+  })
+  var app = new Vue({ // 根实例
+    el: '#app',
+    data: {
+      show: true,
+      type: 'child'
+    },
+    methods: {
+      handleClick: function() {
+        this.show = !this.show
+      },
+      handleIsClick: function() {
+        this.type = this.type === 'child' ? 'child-one' : 'child'
+      }
+    }
+  })
+</script>
+</html>

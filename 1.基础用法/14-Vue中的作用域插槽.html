@@ -3,14 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <title>Vue中的作用域插槽</title>
-  <script src="./vue.js"></script>
+  <script src="../until/vue.js"></script>
 </head>
 <body>
   <div id="app">
-    <body-content>
-      <!-- 给插槽取个名字可以跟下面对应 -->
-      <child class="header" slot="header">header</child>
-    </body-content>
+    <child>
+      <!-- 固定写法template,主要场景为父组件定义子组件渲染的标签定义 -->
+      <template slot-scope="data">
+        <h1>{{data.item}}</h1>
+      </template>
+    </child>
   </div>
 </body>
 <script>
@@ -23,9 +25,8 @@
     template: `
       <div>
         <ul>
-          <li v-for="item of list">
-            {{item}}
-          </li>  
+          <slot v-for="item of list" :item=item>
+          </slot>  
         </ul>
       </div>
     `
